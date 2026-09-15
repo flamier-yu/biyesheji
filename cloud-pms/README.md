@@ -126,6 +126,27 @@ npm run dev
 
 ## 四、目录结构
 
+### 4.1 目录用途一览
+
+| 目录/文件 | 用途 | 是否入 Git | 说明 |
+|---|---|---|---|
+| `sql/` | 数据库脚本 | ✅ | 建表 + 初始化数据 + 业务菜单，按序号顺序执行 |
+| `pms-server/` | 后端源码 | ✅（`target/`、`logs/` 除外） | Spring Boot 2.7 工程 |
+| `pms-web/` | 前端源码 | ✅（`node_modules/`、`dist/` 除外） | Vue 3 + Vite 工程 |
+| `docs/` | 交付文档 | ✅ | 数据库设计文档、部署文档、论文插图 |
+| `deploy/` | 部署辅助 | ✅ | Nginx 配置、外部 MySQL 授权脚本 |
+| `tools/` | 模板复用工具 | ✅ | 接单改名用（批量替换包名/工程名/库名） |
+| `docker-compose.yml` | 部署编排 | ✅ | 服务器上的编排文件（Redis + Backend + Frontend） |
+| `.env.example` | 配置模板 | ✅ | 需覆盖默认数据库配置时，复制为 `.env` 后填写 |
+| `.gitignore` | 忽略规则 | ✅ | 根目录与本项目各一份（根目录的实际生效） |
+| `deploy-out/` | **构建产物输出** | ❌ 不入库 | 手动构建（`mvn package` + `npm run build`）后把产物拷到这里，要上传到服务器的 4 项产物就在这里 |
+| `release/` | ⚠️ **旧版产物（残留）** | ❌ 已忽略 | 旧版打包脚本的输出，已被 `deploy-out/` 取代，**建议删除** |
+
+> **一句话总结**：`sql` `pms-server` `pms-web` `docs` `deploy` `tools` 是源码与文档，全部保留；
+> `deploy-out` 是"要上传到服务器的产物"；`release` 是过时残留，可删。
+
+### 4.2 目录树
+
 ```
 cloud-pms/
 ├── sql/                          数据库脚本（按顺序执行）
@@ -134,7 +155,7 @@ cloud-pms/
 │   └── 03-business-menu.sql      业务模块菜单与角色授权
 │
 ├── pms-server/                   后端服务
-│   ├── Dockerfile
+│   ├── Dockerfile                （已不再被 compose 使用，保留备查）
 │   └── src/main/java/com/biyesheji/pms/
 │       ├── PmsApplication.java   启动类
 │       ├── common/               通用层
@@ -148,7 +169,7 @@ cloud-pms/
 │       │   ├── aspect/           操作日志切面
 │       │   ├── config/           Security / MyBatis-Plus / Redis / Knife4j / WebSocket 配置
 │       │   ├── security/         JWT 过滤器 / 令牌服务 / 登录用户
-│       │   ├── task/             定时任务
+│       │   ├── task/             定时任务（燃尽图快照 / 逾期预警）
 │       │   ├── web/              登录服务与控制器
 │       │   └── websocket/        WebSocket 端点
 │       └── module/               业务模块
@@ -189,14 +210,17 @@ cloud-pms/
 │       ├── 04-任务状态流转图.svg
 │       └── 05-系统部署架构图.svg
 │
-├── deploy/
-│   ├── nginx.conf                生产环境 Nginx 配置
-│   ├── init-external-db.sql      外部 MySQL 建库与授权脚本
-│   ├── backup.sh                 数据库备份脚本（校验+压缩+清理）
-│   └── restore.sh                数据库恢复脚本（含二次确认）
+├── deploy/                       部署辅助（源码级，全部入库）
+│   ├── nginx.conf                生产环境 Nginx 配置（会随产物上传服务器）
+│   └── init-external-db.sql      外部 MySQL 建库与授权脚本
 │
-├── .env.example                  部署配置模板（复制为 .env 后填写）
-├── .gitignore
+├── deploy-out/                   ⚠️ 构建产物（不入库，随时可重新生成，可删）
+│   ├── pms-server.jar            后端产物 → 上传服务器
+│   ├── dist/                     前端产物 → 上传服务器
+│   ├── docker-compose.yml        → 上传服务器
+│   └── nginx.conf                → 上传服务器
+│
+├── release/                      ⚠️ 旧版打包脚本残留（已被 deploy-out 取代，建议删除）
 │
 ├── tools/                        模板复用工具（接单提效用）
 │   ├── rename.mjs                一键改名脚本
@@ -204,8 +228,25 @@ cloud-pms/
 │   ├── example-student.json      示例配置
 │   └── README.md                 使用说明
 │
-└── docker-compose.yml            部署编排（redis + backend + frontend）
+├── .env.example                  部署配置模板（默认配置已内嵌 compose，此文件可选）
+├── .gitignore
+├── docker-compose.yml            部署编排（redis + backend + frontend，官方镜像挂载 jar）
+└── README.md
 ```
+
+### 4.3 可删除项梳理
+
+| 项 | 体积 | 性质 | 建议 |
+|---|---|---|---|
+| `release/` | 77.9 MB / 50 文件 | **旧版打包脚本的残留产物**，内容已被 `deploy-out/` 取代，且 compose 结构已过时 | **建议删除**，留着只会造成"该用哪个"的混淆 |
+| `deploy-out/` | 77.8 MB / 41 文件 | 构建产物，手动构建后随时可以重新拷贝生成 | **本地可留可删**；已加入 .gitignore，不会进仓库 |
+| `pms-server/target/` | ~76 MB | Maven 构建中间产物 | 不入库；本地建议保留（避免每次全量编译） |
+| `pms-web/node_modules/` | ~171 MB / 1.3 万文件 | npm 依赖 | 不入库；本地必须保留（删了要重新 npm install） |
+| `pms-server/logs/` | 少量 | 运行日志 | 不入库；本地可删 |
+| `pms-web/dist/` | ~2.7 MB | 前端构建产物 | 不入库；`npm run build` 会重新生成 |
+
+> 删除任何一项前确认：`release/` 和 `deploy-out/` 删了**不影响任何功能**，
+> 重新执行一次打包命令即可还原；`node_modules` 删了则需要重新 `npm install`。
 
 ---
 

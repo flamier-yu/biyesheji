@@ -23,6 +23,11 @@ backups/
 data/
 *.pid
 
+# ---------------- 构建产物输出目录 ----------------
+# build-release.ps1 的输出，随时可用脚本重新生成，不入库
+deploy-out/
+release/
+
 # ---------------- 环境配置（含凭据，禁止提交） ----------------
 .env
 .env.local
@@ -33,6 +38,7 @@ application-prod.yml
 # ---------------- IDE ----------------
 .idea/
 .vscode/
+.workbuddy/
 *.iml
 *.ipr
 *.iws

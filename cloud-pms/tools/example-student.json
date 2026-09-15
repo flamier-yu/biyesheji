@@ -1,0 +1,18 @@
+{
+  "_comment": "示例：把模板改造成另一个学生的项目（高校科研项目管理系统）。实际接单时复制本文件改成客户的题目即可。",
+  "projectNameCn": "科研云 SRMS",
+  "projectNameEn": "SRMS",
+  "artifactId": "srms",
+  "backendModule": "srms-server",
+  "frontendModule": "srms-web",
+  "javaPackage": "com.zhangsan.srms",
+  "dbName": "srms_db",
+  "serverPort": 8081,
+  "webPort": 5174,
+  "themeColor": "#2e7d32",
+  "storageType": "local",
+  "extraReplacements": {
+    "云协同科技有限公司": "示例大学",
+    "PJ2026": "KY2026"
+  }
+}

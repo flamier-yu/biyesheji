@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620">
+  <title>系统分层架构图</title>
+  <desc>云协同 PMS 采用前后端分离的分层架构，自上而下依次为客户端层、前端展示层、接入层、后端应用层、数据存储层与基础设施层。</desc>
+
+  <defs>
+    <style>
+      .layer-title { font-family: "Microsoft YaHei", sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; }
+      .box-title   { font-family: "Microsoft YaHei", sans-serif; font-size: 13px; font-weight: bold; fill: #1f2d3d; }
+      .box-sub     { font-family: "Microsoft YaHei", sans-serif; font-size: 11px; fill: #5a6c7d; }
+      .tag         { font-family: "Microsoft YaHei", sans-serif; font-size: 11px; fill: #1f2d3d; }
+      .label       { font-family: "Microsoft YaHei", sans-serif; font-size: 12px; fill: #303133; }
+    </style>
+    <marker id="flowArrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#8c9bab" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="620" fill="#ffffff"/>
+
+  <text x="450" y="30" text-anchor="middle"
+        style="font-family:'Microsoft YaHei',sans-serif;font-size:18px;font-weight:bold;fill:#1f2d3d;">
+    云协同 PMS 系统分层架构图
+  </text>
+
+  <!-- ========== 客户端层 ========== -->
+  <rect x="130" y="50" width="90" height="46" rx="6" fill="#5b7c99"/>
+  <text x="175" y="70" text-anchor="middle" class="layer-title">客户端</text>
+  <text x="175" y="86" text-anchor="middle" style="font-family:'Microsoft YaHei',sans-serif;font-size:10px;fill:#d8e4ee;">Browser</text>
+
+  <rect x="240" y="50" width="620" height="46" rx="6" fill="#f0f4f8" stroke="#c3d0dd"/>
+  <rect x="258" y="60" width="140" height="26" rx="4" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="328" y="77" text-anchor="middle" class="tag">PC 浏览器</text>
+  <rect x="412" y="60" width="140" height="26" rx="4" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="482" y="77" text-anchor="middle" class="tag">移动端 H5</text>
+  <rect x="566" y="60" width="140" height="26" rx="4" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="636" y="77" text-anchor="middle" class="tag">数据可视化大屏</text>
+
+  <!-- 箭头 -->
+  <line x1="175" y1="96" x2="175" y2="124" stroke="#8c9bab" stroke-width="1.6" marker-end="url(#flowArrow)"/>
+  <path d="M175 110 L722 110 L722 124" fill="none" stroke="#8c9bab" stroke-width="1.6" marker-end="url(#flowArrow)"/>
+
+  <!-- ========== 前端展示层 ========== -->
+  <rect x="130" y="126" width="90" height="90" rx="6" fill="#3f6ea8"/>
+  <text x="175" y="163" text-anchor="middle" class="layer-title">前端</text>
+  <text x="175" y="179" text-anchor="middle" class="layer-title">展示层</text>
+
+  <rect x="240" y="126" width="620" height="90" rx="6" fill="#e8f0f9" stroke="#aac4de"/>
+  <rect x="258" y="138" width="140" height="28" rx="4" fill="#ffffff" stroke="#8bb0d4"/>
+  <text x="328" y="156" text-anchor="middle" class="tag">Vue 3 + Vite</text>
+  <rect x="412" y="138" width="140" height="28" rx="4" fill="#ffffff" stroke="#8bb0d4"/>
+  <text x="482" y="156" text-anchor="middle" class="tag">Element Plus</text>
+  <rect x="566" y="138" width="140" height="28" rx="4" fill="#ffffff" stroke="#8bb0d4"/>
+  <text x="636" y="156" text-anchor="middle" class="tag">Vue Router 动态路由</text>
+  <rect x="720" y="138" width="122" height="28" rx="4" fill="#ffffff" stroke="#8bb0d4"/>
+  <text x="781" y="156" text-anchor="middle" class="tag">Pinia 状态管理</text>
+
+  <rect x="258" y="176" width="140" height="28" rx="4" fill="#ffffff" stroke="#8bb0d4"/>
+  <text x="328" y="194" text-anchor="middle" class="tag">Axios 请求封装</text>
+  <rect x="412" y="176" width="140" height="28" rx="4" fill="#ffffff" stroke="#8bb0d4"/>
+  <text x="482" y="194" text-anchor="middle" class="tag">ECharts 图表</text>
+  <rect x="566" y="176" width="140" height="28" rx="4" fill="#ffffff" stroke="#8bb0d4"/>
+  <text x="636" y="194" text-anchor="middle" class="tag">v-permission 指令</text>
+  <rect x="720" y="176" width="122" height="28" rx="4" fill="#ffffff" stroke="#8bb0d4"/>
+  <text x="781" y="194" text-anchor="middle" class="tag">WebSocket 客户端</text>
+
+  <line x1="175" y1="216" x2="175" y2="246" stroke="#8c9bab" stroke-width="1.6" marker-end="url(#flowArrow)"/>
+  <path d="M175 232 L722 232 L722 246" fill="none" stroke="#8c9bab" stroke-width="1.6" marker-end="url(#flowArrow)"/>
+
+  <!-- ========== 接入层 ========== -->
+  <rect x="130" y="248" width="90" height="46" rx="6" fill="#7a8fa6"/>
+  <text x="175" y="276" text-anchor="middle" class="layer-title">接入层</text>
+
+  <rect x="240" y="248" width="620" height="46" rx="6" fill="#f2f5f8" stroke="#c3d0dd"/>
+  <rect x="258" y="258" width="140" height="26" rx="4" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="328" y="275" text-anchor="middle" class="tag">Nginx 反向代理</text>
+  <rect x="412" y="258" width="140" height="26" rx="4" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="482" y="275" text-anchor="middle" class="tag">JWT 令牌校验</text>
+  <rect x="566" y="258" width="140" height="26" rx="4" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="636" y="275" text-anchor="middle" class="tag">CORS 跨域处理</text>
+  <rect x="720" y="258" width="122" height="26" rx="4" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="781" y="275" text-anchor="middle" class="tag">静态资源托管</text>
+
+  <line x1="175" y1="294" x2="175" y2="324" stroke="#8c9bab" stroke-width="1.6" marker-end="url(#flowArrow)"/>
+  <path d="M175 310 L722 310 L722 324" fill="none" stroke="#8c9bab" stroke-width="1.6" marker-end="url(#flowArrow)"/>
+
+  <!-- ========== 后端应用层 ========== -->
+  <rect x="130" y="326" width="90" height="130" rx="6" fill="#2f7d5b"/>
+  <text x="175" y="380" text-anchor="middle" class="layer-title">后端</text>
+  <text x="175" y="396" text-anchor="middle" class="layer-title">应用层</text>
+
+  <rect x="240" y="326" width="620" height="130" rx="6" fill="#e6f4ee" stroke="#9ccdb8"/>
+
+  <!-- 三层调用链 -->
+  <rect x="258" y="338" width="250" height="34" rx="4" fill="#ffffff" stroke="#6fb999"/>
+  <text x="383" y="354" text-anchor="middle" class="box-title">Controller 层</text>
+  <text x="383" y="367" text-anchor="middle" class="box-sub">Spring MVC · 参数校验 · Knife4j</text>
+
+  <rect x="258" y="382" width="250" height="34" rx="4" fill="#ffffff" stroke="#6fb999"/>
+  <text x="383" y="398" text-anchor="middle" class="box-title">Service 层</text>
+  <text x="383" y="411" text-anchor="middle" class="box-sub">业务编排 · 事务控制 · AOP 切面</text>
+
+  <rect x="258" y="426" width="250" height="34" rx="4" fill="#ffffff" stroke="#6fb999"/>
+  <text x="383" y="442" text-anchor="middle" class="box-title">Mapper 层</text>
+  <text x="383" y="455" text-anchor="middle" class="box-sub">MyBatis-Plus · 分页 · 逻辑删除</text>
+
+  <line x1="383" y1="372" x2="383" y2="380" stroke="#5a9c7f" stroke-width="1.4" marker-end="url(#flowArrow)"/>
+  <line x1="383" y1="416" x2="383" y2="424" stroke="#5a9c7f" stroke-width="1.4" marker-end="url(#flowArrow)"/>
+
+  <!-- 通用组件区 -->
+  <rect x="524" y="336" width="322" height="110" rx="5" fill="#f4faf7" stroke="#b5ddd0" stroke-dasharray="4 3"/>
+  <text x="685" y="352" text-anchor="middle" class="box-sub" style="fill:#3f6e5c;font-weight:bold;">通用技术组件</text>
+
+  <rect x="536" y="360" width="96" height="26" rx="4" fill="#ffffff" stroke="#9ccdb8"/>
+  <text x="584" y="377" text-anchor="middle" class="tag">Security + JWT</text>
+  <rect x="640" y="360" width="96" height="26" rx="4" fill="#ffffff" stroke="#9ccdb8"/>
+  <text x="688" y="377" text-anchor="middle" class="tag">Redis 缓存</text>
+  <rect x="744" y="360" width="90" height="26" rx="4" fill="#ffffff" stroke="#9ccdb8"/>
+  <text x="789" y="377" text-anchor="middle" class="tag">RabbitMQ</text>
+
+  <rect x="536" y="392" width="96" height="26" rx="4" fill="#ffffff" stroke="#9ccdb8"/>
+  <text x="584" y="409" text-anchor="middle" class="tag">Quartz 定时</text>
+  <rect x="640" y="392" width="96" height="26" rx="4" fill="#ffffff" stroke="#9ccdb8"/>
+  <text x="688" y="409" text-anchor="middle" class="tag">WebSocket</text>
+  <rect x="744" y="392" width="90" height="26" rx="4" fill="#ffffff" stroke="#9ccdb8"/>
+  <text x="789" y="409" text-anchor="middle" class="tag">EasyExcel</text>
+
+  <rect x="536" y="420" width="298" height="20" rx="4" fill="#ffffff" stroke="#9ccdb8"/>
+  <text x="685" y="434" text-anchor="middle" class="tag">AOP 日志切面 · 全局异常处理 · 统一响应封装</text>
+
+  <line x1="175" y1="458" x2="175" y2="488" stroke="#8c9bab" stroke-width="1.6" marker-end="url(#flowArrow)"/>
+  <path d="M175 474 L722 474 L722 488" fill="none" stroke="#8c9bab" stroke-width="1.6" marker-end="url(#flowArrow)"/>
+
+  <!-- ========== 数据存储层 ========== -->
+  <rect x="130" y="490" width="90" height="46" rx="6" fill="#a8763f"/>
+  <text x="175" y="511" text-anchor="middle" class="layer-title">数据</text>
+  <text x="175" y="527" text-anchor="middle" class="layer-title">存储层</text>
+
+  <rect x="240" y="490" width="620" height="46" rx="6" fill="#faf5ee" stroke="#d9c3a3"/>
+  <rect x="258" y="500" width="148" height="26" rx="4" fill="#ffffff" stroke="#c9a97c"/>
+  <text x="332" y="517" text-anchor="middle" class="tag">MySQL 8.0 主数据库</text>
+  <rect x="418" y="500" width="148" height="26" rx="4" fill="#ffffff" stroke="#c9a97c"/>
+  <text x="492" y="517" text-anchor="middle" class="tag">Redis 缓存/令牌</text>
+  <rect x="578" y="500" width="128" height="26" rx="4" fill="#ffffff" stroke="#c9a97c"/>
+  <text x="642" y="517" text-anchor="middle" class="tag">MinIO/本地文件</text>
+  <rect x="718" y="500" width="124" height="26" rx="4" fill="#ffffff" stroke="#c9a97c"/>
+  <text x="780" y="517" text-anchor="middle" class="tag">Elasticsearch</text>
+
+  <!-- ========== 基础设施层 ========== -->
+  <rect x="130" y="548" width="90" height="46" rx="6" fill="#6b7280"/>
+  <text x="175" y="569" text-anchor="middle" class="layer-title">基础</text>
+  <text x="175" y="585" text-anchor="middle" class="layer-title">设施层</text>
+
+  <rect x="240" y="548" width="620" height="46" rx="6" fill="#f3f4f6" stroke="#cbd0d6"/>
+  <rect x="258" y="558" width="120" height="26" rx="4" fill="#ffffff" stroke="#adb4bd"/>
+  <text x="318" y="575" text-anchor="middle" class="tag">Maven 构建</text>
+  <rect x="390" y="558" width="120" height="26" rx="4" fill="#ffffff" stroke="#adb4bd"/>
+  <text x="450" y="575" text-anchor="middle" class="tag">Git 版本控制</text>
+  <rect x="522" y="558" width="120" height="26" rx="4" fill="#ffffff" stroke="#adb4bd"/>
+  <text x="582" y="575" text-anchor="middle" class="tag">Docker 容器化</text>
+  <rect x="654" y="558" width="188" height="26" rx="4" fill="#ffffff" stroke="#adb4bd"/>
+  <text x="748" y="575" text-anchor="middle" class="tag">Logback 日志 · Actuator 监控</text>
+
+  <!-- 左侧分层标注 -->
+  <text x="72" y="360" text-anchor="middle" transform="rotate(-90 72 360)"
+        style="font-family:'Microsoft YaHei',sans-serif;font-size:12px;fill:#8c9bab;">
+    请求自上而下 · 响应自下而上
+  </text>
+</svg>

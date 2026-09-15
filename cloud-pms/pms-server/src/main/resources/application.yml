@@ -1,0 +1,81 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: pms-server
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+# ============ MyBatis-Plus ============
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.biyesheji.pms.module.**.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+      logic-delete-field: delFlag
+      logic-delete-value: 2
+      logic-not-delete-value: 0
+
+# ============ 接口文档 ============
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  default-flat-param-object: true
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: 数据模型
+  basic:
+    enable: false
+
+# ============ 监控 ============
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# ============ 业务配置 ============
+pms:
+  jwt:
+    # 生产环境请通过环境变量 PMS_JWT_SECRET 覆盖
+    secret: ${PMS_JWT_SECRET:pms-yunxiao-token-secret-key-2026-please-change-in-production}
+    # 令牌有效期(分钟)
+    expire-minutes: 120
+    header: Authorization
+    token-prefix: "Bearer "
+  # 是否开启登录验证码
+  captcha-enabled: true
+  # 文件上传根目录
+  upload-path: ${user.dir}/uploads

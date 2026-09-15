@@ -1,0 +1,79 @@
+/* ============================================================
+ * 主题色配置
+ * 换肤只改这一块即可，Element Plus 与自定义组件都会跟着变
+ * ============================================================ */
+:root {
+  --el-color-primary: #409eff;
+  --el-color-primary-light-3: #79bbff;
+  --el-color-primary-light-5: #a0cfff;
+  --el-color-primary-light-7: #c6e2ff;
+  --el-color-primary-light-8: #d9ecff;
+  --el-color-primary-light-9: #ecf5ff;
+  --el-color-primary-dark-2: #337ecc;
+
+  /* 侧边栏与顶栏 */
+  --sidebar-bg: #304156;
+  --sidebar-bg-active: #263445;
+  --sidebar-text: #bfcbd9;
+  --navbar-height: 56px;
+  --sidebar-width: 210px;
+  --sidebar-width-collapsed: 64px;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", Arial, sans-serif;
+  font-size: 14px;
+  color: #303133;
+  background-color: #f0f2f5;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 通用页面容器 */
+.app-container {
+  padding: 16px;
+}
+
+/* 查询条件区 */
+.search-bar {
+  padding: 16px 16px 0;
+  background: #fff;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+/* 表格工具栏 */
+.table-toolbar {
+  margin-bottom: 12px;
+}
+
+/* 分页容器 */
+.pagination-wrap {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 表格卡片 */
+.table-card {
+  padding: 16px;
+  background: #fff;
+  border-radius: 6px;
+}

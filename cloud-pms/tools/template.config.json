@@ -1,0 +1,15 @@
+{
+  "_comment": "模板默认配置（保持与模板一致，用于 dry-run 自检）。改项目请复制本文件另存一份再改。",
+  "projectNameCn": "云协同 PMS",
+  "projectNameEn": "CloudPMS",
+  "artifactId": "cloud-pms",
+  "backendModule": "pms-server",
+  "frontendModule": "pms-web",
+  "javaPackage": "com.biyesheji.pms",
+  "dbName": "biyesheji",
+  "serverPort": 8080,
+  "webPort": 5173,
+  "themeColor": "#409eff",
+  "storageType": "local",
+  "extraReplacements": {}
+}

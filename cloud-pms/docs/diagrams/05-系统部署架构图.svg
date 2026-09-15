@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="960" height="640">
+  <title>系统部署架构图</title>
+  <desc>描述生产环境下浏览器经 Nginx 反向代理访问前端静态资源与后端应用，后端应用连接 MySQL、Redis 与文件存储的部署结构。</desc>
+
+  <defs>
+    <style>
+      .zone   { font-family:"Microsoft YaHei",sans-serif; font-size:12px; font-weight:bold; fill:#5a6c7d; }
+      .node   { font-family:"Microsoft YaHei",sans-serif; font-size:13px; font-weight:bold; fill:#1f2d3d; }
+      .node-s { font-family:"Microsoft YaHei",sans-serif; font-size:10px; fill:#6b7c8d; }
+      .title  { font-family:"Microsoft YaHei",sans-serif; font-size:18px; font-weight:bold; fill:#1f2d3d; }
+      .link   { font-family:"Microsoft YaHei",sans-serif; font-size:11px; fill:#33475b; }
+    </style>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#4a6b8a" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#8c9bab" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="640" fill="#ffffff"/>
+
+  <text x="480" y="34" text-anchor="middle" class="title">系统部署架构图</text>
+
+  <!-- ========== 用户侧 ========== -->
+  <rect x="40" y="66" width="200" height="120" rx="10" fill="#f5f7fa" stroke="#c3d0dd" stroke-dasharray="5 4"/>
+  <text x="140" y="88" text-anchor="middle" class="zone">用户侧</text>
+
+  <rect x="66" y="100" width="148" height="34" rx="6" fill="#3f6ea8"/>
+  <text x="140" y="122" text-anchor="middle" class="node" fill="#ffffff">浏览器</text>
+  <rect x="66" y="142" width="148" height="34" rx="6" fill="#7a8fa6"/>
+  <text x="140" y="164" text-anchor="middle" class="node" fill="#ffffff">移动端设备</text>
+
+  <!-- ========== 服务器侧（应用服务器） ========== -->
+  <rect x="300" y="66" width="620" height="250" rx="10" fill="#f0f6fc" stroke="#aac4de"/>
+  <text x="610" y="88" text-anchor="middle" class="zone">应用服务器</text>
+
+  <!-- Nginx -->
+  <rect x="324" y="102" width="168" height="70" rx="8" fill="#7b5e9c"/>
+  <text x="408" y="130" text-anchor="middle" class="node" fill="#ffffff">Nginx</text>
+  <text x="408" y="150" text-anchor="middle" class="node-s" fill="#e8dcf2">反向代理 · 静态资源</text>
+  <text x="408" y="164" text-anchor="middle" class="node-s" fill="#e8dcf2">端口 80 / 443</text>
+
+  <!-- 前端静态资源 -->
+  <rect x="524" y="98" width="180" height="36" rx="6" fill="#3f6ea8"/>
+  <text x="614" y="114" text-anchor="middle" class="node" fill="#ffffff">前端静态资源</text>
+  <text x="614" y="128" text-anchor="middle" class="node-s" fill="#d6e4f2">dist 打包产物（Vue 3）</text>
+
+  <!-- 后端应用 -->
+  <rect x="524" y="150" width="180" height="62" rx="6" fill="#2f7d5b"/>
+  <text x="614" y="174" text-anchor="middle" class="node" fill="#ffffff">后端应用服务</text>
+  <text x="614" y="192" text-anchor="middle" class="node-s" fill="#d6f0e4">Spring Boot 内嵌 Tomcat</text>
+  <text x="614" y="205" text-anchor="middle" class="node-s" fill="#d6f0e4">端口 8080</text>
+
+  <!-- 多实例提示 -->
+  <rect x="740" y="150" width="158" height="62" rx="6" fill="#ffffff" stroke="#a8bccd" stroke-dasharray="5 4"/>
+  <text x="819" y="176" text-anchor="middle" class="node-s">后端实例 2（可选）</text>
+  <text x="819" y="194" text-anchor="middle" class="node-s">水平扩展时增加</text>
+
+  <!-- 应用服务器内的说明 -->
+  <rect x="324" y="192" width="168" height="102" rx="6" fill="#ffffff" stroke="#c3d0dd"/>
+  <text x="408" y="212" text-anchor="middle" class="node-s" style="font-weight:bold;fill:#3f5a75;">容器化部署</text>
+  <text x="408" y="234" text-anchor="middle" class="node-s">Docker + Compose</text>
+  <text x="408" y="254" text-anchor="middle" class="node-s">JDK 8 / Node 18 镜像</text>
+  <text x="408" y="274" text-anchor="middle" class="node-s">数据卷挂载日志与上传目录</text>
+
+  <!-- ========== 箭头：用户 -> Nginx ========== -->
+  <line x1="240" y1="136" x2="318" y2="136" stroke="#4a6b8a" stroke-width="1.7" marker-end="url(#ar)"/>
+  <text x="279" y="128" text-anchor="middle" class="link">HTTP/HTTPS</text>
+
+  <!-- 箭头：Nginx -> 前端 -->
+  <line x1="492" y1="116" x2="518" y2="116" stroke="#4a6b8a" stroke-width="1.7" marker-end="url(#ar)"/>
+  <text x="505" y="108" text-anchor="middle" class="link" font-size="10">静态</text>
+
+  <!-- 箭头：Nginx -> 后端 -->
+  <line x1="492" y1="176" x2="518" y2="176" stroke="#4a6b8a" stroke-width="1.7" marker-end="url(#ar)"/>
+  <text x="505" y="168" text-anchor="middle" class="link" font-size="10">API</text>
+
+  <!-- 箭头：前端 -> 后端（接口调用） -->
+  <path d="M704 116 L726 116 L726 160" fill="none" stroke="#8c9bab"
+        stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ar2)"/>
+  <text x="752" y="112" class="link" font-size="10">Ajax 调用</text>
+
+  <!-- ========== 数据侧 ========== -->
+  <rect x="300" y="346" width="620" height="240" rx="10" fill="#faf7f2" stroke="#d9c3a3"/>
+  <text x="610" y="368" text-anchor="middle" class="zone">数据与存储</text>
+
+  <!-- MySQL -->
+  <rect x="324" y="386" width="180" height="72" rx="8" fill="#a8763f"/>
+  <text x="414" y="412" text-anchor="middle" class="node" fill="#ffffff">MySQL 8.0</text>
+  <text x="414" y="432" text-anchor="middle" class="node-s" fill="#f2e4d6">业务数据持久化</text>
+  <text x="414" y="448" text-anchor="middle" class="node-s" fill="#f2e4d6">端口 3306 · 库 biyesheji</text>
+
+  <!-- Redis -->
+  <rect x="524" y="386" width="180" height="72" rx="8" fill="#a05a3f"/>
+  <text x="614" y="412" text-anchor="middle" class="node" fill="#ffffff">Redis</text>
+  <text x="614" y="432" text-anchor="middle" class="node-s" fill="#f2dcd6">令牌 · 验证码 · 参数缓存</text>
+  <text x="614" y="448" text-anchor="middle" class="node-s" fill="#f2dcd6">端口 6379</text>
+
+  <!-- 文件存储 -->
+  <rect x="724" y="386" width="174" height="72" rx="8" fill="#3f7d7d"/>
+  <text x="811" y="412" text-anchor="middle" class="node" fill="#ffffff">文件存储</text>
+  <text x="811" y="432" text-anchor="middle" class="node-s" fill="#d6f0f0">本地磁盘 / MinIO / OSS</text>
+  <text x="811" y="448" text-anchor="middle" class="node-s" fill="#d6f0f0">附件与头像</text>
+
+  <!-- 箭头：后端 -> 数据层 -->
+  <line x1="560" y1="212" x2="414" y2="380" stroke="#4a6b8a" stroke-width="1.7" marker-end="url(#ar)"/>
+  <text x="440" y="320" class="link" font-size="10">JDBC / Druid 连接池</text>
+
+  <line x1="614" y1="212" x2="614" y2="380" stroke="#4a6b8a" stroke-width="1.7" marker-end="url(#ar)"/>
+  <text x="626" y="300" class="link" font-size="10">Jedis 连接池</text>
+
+  <line x1="670" y1="212" x2="800" y2="380" stroke="#4a6b8a" stroke-width="1.7" marker-end="url(#ar)"/>
+  <text x="762" y="320" class="link" font-size="10">存储 SDK</text>
+
+  <!-- 备份说明 -->
+  <rect x="324" y="486" width="574" height="80" rx="8" fill="#ffffff" stroke="#e0d3bd"/>
+  <text x="611" y="508" text-anchor="middle" class="node-s" style="font-weight:bold;fill:#8a6d3f;">运维建议</text>
+  <text x="611" y="530" text-anchor="middle" class="node-s">① MySQL 每日全量备份 + binlog 增量；② Redis 开启 RDB 持久化；</text>
+  <text x="611" y="550" text-anchor="middle" class="node-s">③ 上传目录纳入备份范围；④ 日志按天滚动，保留 30 天。</text>
+
+  <!-- ========== 本地开发环境对照 ========== -->
+  <rect x="40" y="346" width="220" height="240" rx="10" fill="#f5f7fa" stroke="#c3d0dd"/>
+  <text x="150" y="368" text-anchor="middle" class="zone">本地开发环境</text>
+
+  <rect x="60" y="384" width="180" height="30" rx="5" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="150" y="404" text-anchor="middle" class="node-s">前端：Vite Dev Server 5173</text>
+
+  <rect x="60" y="422" width="180" height="30" rx="5" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="150" y="442" text-anchor="middle" class="node-s">后端：8080（显式指定端口）</text>
+
+  <rect x="60" y="460" width="180" height="30" rx="5" fill="#ffffff" stroke="#a8bccd"/>
+  <text x="150" y="480" text-anchor="middle" class="node-s">MySQL 3306 · Redis 6379</text>
+
+  <rect x="60" y="498" width="180" height="72" rx="5" fill="#fff8e6" stroke="#e6cfa8"/>
+  <text x="150" y="518" text-anchor="middle" class="node-s" style="font-weight:bold;fill:#8a6d3f;">开发期差异</text>
+  <text x="150" y="538" text-anchor="middle" class="node-s">前端经 Vite 代理</text>
+  <text x="150" y="554" text-anchor="middle" class="node-s">/dev-api → 8080</text>
+  <text x="150" y="570" text-anchor="middle" class="node-s">/ws → 8080（WebSocket）</text>
+
+  <!-- ========== 底部说明 ========== -->
+  <text x="480" y="616" text-anchor="middle"
+        style="font-family:'Microsoft YaHei',sans-serif;font-size:11px;fill:#8c9bab;">
+    说明：开发环境由 Vite 代理解决跨域；生产环境由 Nginx 同源反向代理，前后端部署在同一域名下，无需处理跨域。
+  </text>
+</svg>

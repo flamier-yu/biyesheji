@@ -27,7 +27,8 @@ services:
     restart: unless-stopped
     command: redis-server --appendonly yes
     volumes:
-      - redis-data:/data
+      # 数据落在项目目录内，整个 /opt/pms 目录拷走即可完成迁移
+      - ./data/redis:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -60,7 +61,8 @@ services:
     volumes:
       - ./pms-server.jar:/app/app.jar:ro
       - ./logs:/app/logs
-      - upload-data:/app/uploads
+      # 用户上传的附件落在项目目录内
+      - ./data/uploads:/app/uploads
     command:
       - java
       - -Xms256m
@@ -86,6 +88,5 @@ services:
     ports:
       - "${WEB_PORT:-80}:80"
 
-volumes:
-  redis-data:
-  upload-data:
+# 说明：不再使用命名卷 —— Redis 持久化与上传附件均以绑定挂载方式
+# 落在项目目录（./data/），确保所有数据都在 /opt/pms 内，便于备份与迁移。

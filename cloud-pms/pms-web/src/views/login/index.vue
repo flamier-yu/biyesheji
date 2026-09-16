@@ -43,6 +43,15 @@
               title="点击刷新"
               @click="loadCaptcha"
             />
+            <!-- 加载失败时的占位：可点击重试，避免验证码区域整个消失 -->
+            <div
+              v-else
+              class="captcha-img captcha-retry"
+              title="验证码加载失败，请检查后端服务与 Redis 是否正常"
+              @click="loadCaptcha"
+            >
+              点击重试
+            </div>
           </div>
         </el-form-item>
 
@@ -99,7 +108,12 @@ async function loadCaptcha() {
       form.uuid = res.data.uuid
     }
   } catch (e) {
-    captchaEnabled.value = false
+    // 加载失败：清空图片以显示「点击重试」占位，但**不隐藏**验证码表单项。
+    // 注意：这里不能置 captchaEnabled = false —— 那会把「接口故障」伪装成
+    // 「后端主动关闭了验证码」，问题被静默吞掉。典型场景：Redis 未启动时，
+    // 用户只会看到验证码凭空消失，完全无从排查。
+    captchaImg.value = ''
+    ElMessage.error('验证码加载失败，请检查后端服务与 Redis 是否正常')
   }
 }
 
@@ -192,6 +206,17 @@ onMounted(() => {
     cursor: pointer;
     border: 1px solid #dcdfe6;
     flex-shrink: 0;
+  }
+
+  /* 加载失败占位：与验证码图片同尺寸，可点击重试 */
+  .captcha-retry {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #909399;
+    background: #f5f7fa;
+    user-select: none;
   }
 }
 

@@ -330,7 +330,7 @@ cloud-pms/
 mysql -uroot -p < deploy/init-external-db.sql
 
 # 2. 配置数据库连接
-cp .env.example .env && vi .env     # 填 DB_HOST / DB_USER / DB_PASSWORD / DB_NAME
+cp .env.example .env && vi .env     # 填 DB_HOST / DB_USERNAME / DB_PASSWORD / DB_NAME
 
 # 3. 构建产物
 cd pms-server && mvn clean package -DskipTests && cd ..
@@ -341,6 +341,14 @@ docker compose up -d
 ```
 
 **`DB_HOST` 取值**：同机填 `host.docker.internal`；异机填对方 IP。
+
+**端口**：后端 `${BACKEND_PORT:-18080}` → 容器 8080，前端 `${WEB_PORT:-9000}` → 容器 80。
+访问入口是 `http://<服务器IP>:9000`。默认值刻意避开 **80 / 8080** —— 1Panel 等面板自带的
+OpenResty 通常占用这两个端口，撞上会报 `address already in use`。
+
+> ⚠️ 两个坑：① `.env` 里 `# BACKEND_PORT=...` 这种**带 `#` 的行会被 Compose 忽略**，等于没设置；
+> ② 改完端口必须 `docker compose up -d` **重建容器**，`restart` 不会应用新的端口映射。
+> 排查端口占用：`sudo ss -lntp 'sport = :8080'`（不加 sudo 看不到 root 的进程）。
 
 > 容器里的 `127.0.0.1` 指容器自己，不是宿主机 —— 这是混合部署最容易踩的坑。
 > 本项目已在编排中声明 `extra_hosts: host.docker.internal:host-gateway`，Linux 下同样可用。
